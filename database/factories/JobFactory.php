@@ -30,7 +30,6 @@ class JobFactory extends Factory
                 'Education',
                 'Marketing',
                 'Sales',
-                'Other'
             ]),
             'experience_level' => fake()->randomElement(Job::$experience)
 

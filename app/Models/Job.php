@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
 
@@ -12,8 +13,14 @@ class Job extends Model
 {
     /** @use HasFactory<\Database\Factories\JobFactory> */
     use HasFactory;
+
     public static $experience = ['entry', 'intermediate', 'senior'];
     public static $category = ['IT', 'Finance', 'Healthcare', 'Education', 'Engineering','Marketing','Sale'];
+    
+    public function employer():BelongsTo
+    {
+        return $this->belongsTo(Employer::class);
+    }
 
     public function scopeFilter(Builder|QueryBuilder $query, array $filter): Builder|QueryBuilder
     {
