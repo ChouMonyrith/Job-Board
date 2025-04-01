@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Job;
 use Illuminate\Http\Request;
-
-class JobController extends Controller
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\JobApplication;
+class MyApplicationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $filters =request()->only('search','min_salary','max_salary','experience_level','category');
+        $applications = JobApplication::with(['job', 'job.employer'])
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->get();
 
-        return view('jobs.index',['jobs' => Job::with('employer')->filter($filters)->get()]);
+        return view('my_job_application.index', compact('applications'));
     }
 
     /**
@@ -36,9 +40,9 @@ class JobController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Job $job)
+    public function show(string $id)
     {
-        return view('jobs.show',['job' => $job->load('employer.jobs')]);
+        //
     }
 
     /**
