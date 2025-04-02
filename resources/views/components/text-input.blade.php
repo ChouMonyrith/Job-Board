@@ -8,6 +8,19 @@
         </button>
     @endif
     <input x-ref="input-{{$name}}" type="{{$type}}" placeholder="{{ $placeholder }}" 
-           id="{{ $name }}" name="{{ $name }}" value="{{ $value }}" 
-           class="w-full rounded-md border-0 py-1.5 pr-8 px-2 text-sm ring-1 ring-slate-300 placeholder:text-slate-400 focus:ring-2" />
+           id="{{ $name }}" name="{{ $name }}" value="{{ old($name,$value) }}" 
+           
+           @class([
+            'w-full rounded-md border-0 py-1.5 px-2.5 text-sm ring-1 placeholder:text-slate-400 focus:ring-2',
+            'pr-8' => $formRef,
+            'ring-slate-300' => !$errors->has($name)
+           ])
+           
+           />
+    
+    @error($name)
+        <div class="mt-1 text-xs text-red-500">
+            {{$message}}
+        </div>
+    @enderror
 </div>

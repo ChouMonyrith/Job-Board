@@ -13,7 +13,9 @@ class MyApplicationController extends Controller
      */
     public function index()
     {
-        $applications = JobApplication::with(['job', 'job.employer'])
+        $applications = JobApplication::with(['job' => function ($query) {
+            $query->withCount('jobApplications');
+        }, 'job.employer'])
             ->where('user_id', Auth::id())
             ->latest()
             ->get();
@@ -64,8 +66,10 @@ class MyApplicationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(JobApplication $myJobApplication)
     {
-        //
+        $myJobApplication->delete();
+
+        return redirect()->back()->with('success','Job Application Removed');
     }
 }

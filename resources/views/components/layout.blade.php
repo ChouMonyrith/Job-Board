@@ -27,6 +27,9 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{route('my-jobs.index')}}">My Jobs</a>
+                    </li>
+                    <li>
                         <form method="POST" action="{{ route('auth.destroy') }}">
                             @csrf
                             @method('DELETE')
@@ -41,6 +44,12 @@
         @if (session('success'))
             <div role="alert" class="my-8 rounded-md border-l-4 border-green-300 bg-green-100 p-4 text-green-700 opacity-75">
                 <p class="font-bold">Success!</p>
+                <div>{{session('success')}}</div>
+            </div>
+        @endif
+        @if (session('error'))
+            <div role="alert" class="my-8 rounded-md border-l-4 border-red-300 bg-red-100 p-4 text-red-700 opacity-75">
+                <p class="font-bold">Invalid Credential!</p>
                 <div>{{session('success')}}</div>
             </div>
         @endif
